@@ -5,26 +5,30 @@
 // Initiering av globala variabler samt koppling av funktioner till knapparna.
 function init() {
 
+//////////////////////////////////////////////////////////
   // Lista med spelets alla ord
+//////////////////////////////////////////////////////////
 var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript', 'Husse är sämst'];
 
+//////////////////////////////////////////////////////////
 // Ett av orden valt av en slumpgenerator
-var selectedWord;
+//////////////////////////////////////////////////////////
+var selectedWord = generateRandomWord().toUpperCase();
 
 function generateRandomWord() {
-  selectedWord = wordList[Math.floor((Math.random() * wordList.length) + 0)];
+  return selectedWord = wordList[Math.floor((Math.random() * wordList.length) + 0)];
 }
 
+//////////////////////////////////////////////////////////
 //Rutorna där bokstäverna ska stå
+//////////////////////////////////////////////////////////
 var letterBoxes = function createLetters() {
-
-  generateRandomWord();
 
   var letterBox = document.querySelector('#letterBoxes > ul');
 
   letterBox.innerHTML = '';
 
-  for (var i = 0; i < selectedWord.length; i++) {
+  for (let i = 0; i < selectedWord.length; i++) {
     var createLetterBox = document.createElement('li');
     letterBox.appendChild(createLetterBox);
 
@@ -60,22 +64,35 @@ var startGame = function() {
 } 
 startGameBtn.addEventListener('click', startGame);
 
+//////////////////////////////////////////////////////////
 // Knapparna för bokstäverna
-var guessLetterBtn = document.querySelector('#letterButtons > li > button'); 
+//////////////////////////////////////////////////////////
+var guessLetterBtns = document.querySelectorAll('#letterButtons > li > button');
 
-var guessLetter = function() {
-   if (letterBoxes(selectedWord[i]) === getAttribute(guessLetterBtn)) {
-    letterInput.setAttribute('value', getAttribute());
-  } else {
-    guessLetterBtn.getAttribute('disabled', '');
-  }
+for (let i = 0; i < guessLetterBtns.length; i++) {
+
+  guessLetterBtns[i].addEventListener('click', function() {
+
+    guessLetterBtns[i].setAttribute('disabled', '');
+
+    const currentButtonValue = guessLetterBtns[i].value;
+
+    for (let j = 0; j < selectedWord.length; j++) {
+      if (currentButtonValue === selectedWord[j]) {
+        rightGuess(currentButtonValue, j);
+      }
+    }
+
+  });
+
 }
-guessLetterBtn.addEventListener('click', guessLetter);
+function rightGuess(letterThatWasCorrect, positionOfLetter) {
+    var letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input');
+
+    letterBoxes[positionOfLetter].value = letterThatWasCorrect;
+}
 // Mäter tiden
 var startTime; 
-
-// letterBoxes();
-
 
 } // End init
 
