@@ -35,7 +35,7 @@ var letterBoxes = function createLetters() {
         var letterInput = document.createElement('input');
         letterInput.setAttribute('type', 'text');
         letterInput.setAttribute('disabled', '');
-        // Om ordet innehåller mellanslag lägg till "-" annars lämna value blank
+            // Om ordet innehåller mellanslag lägg till "-" annars lämna value blank
           if (selectedWord[i] == ' ') {
             letterInput.setAttribute('value', '-');
           } else {
@@ -45,17 +45,24 @@ var letterBoxes = function createLetters() {
     createLetterBox.appendChild(letterInput);
     }
 }
-
+//////////////////////////////////////////////////////////
 //Bild som kommer vid fel svar
+//////////////////////////////////////////////////////////
 var hangmanImg;
 
+//////////////////////////////////////////////////////////
 // Vilken av bilderna som kommer upp beroende på hur många fel du gjort
+//////////////////////////////////////////////////////////
 var hangmanImgNr;
 
+//////////////////////////////////////////////////////////
 // Ger meddelande när spelet är över
+//////////////////////////////////////////////////////////
 var msgElem;
 
+//////////////////////////////////////////////////////////
 // Knappen du startar spelet med
+//////////////////////////////////////////////////////////
 var startGameBtn = document.querySelector('#startGameBtn');
 var startGame = function() {
   
@@ -67,18 +74,21 @@ startGameBtn.addEventListener('click', startGame);
 //////////////////////////////////////////////////////////
 // Knapparna för bokstäverna
 //////////////////////////////////////////////////////////
+  // Hämtar alla gissa-knappar
 var guessLetterBtns = document.querySelectorAll('#letterButtons > li > button');
-
+  //Loopar igenom alla gissa-knappar
 for (let i = 0; i < guessLetterBtns.length; i++) {
-
+    // Lägger till en lyssnare efter klick på alla gissa-knappar
   guessLetterBtns[i].addEventListener('click', function() {
-
+      // Lägger till disabled på knapparna efter klick
     guessLetterBtns[i].setAttribute('disabled', '');
 
     const currentButtonValue = guessLetterBtns[i].value;
-
+      // Loopar igenom nuvarande ord som man gissar på
     for (let j = 0; j < selectedWord.length; j++) {
+        // Om knapptryck stämmer med bokstav i ordet anropa "rightGuess" funktionen
       if (currentButtonValue === selectedWord[j]) {
+          // Skickar vidare bokstav från gissa-knapp (currentButtonValue) och loopen som letar efter positonen för alla bokstäver som är rätt (j)
         rightGuess(currentButtonValue, j);
       }
     }
@@ -86,9 +96,11 @@ for (let i = 0; i < guessLetterBtns.length; i++) {
   });
 
 }
+  // Tar emot 2 argument, bokstaven som var korrekt (letterThatWasCorrect) och vilken position dessa befinner sig på
 function rightGuess(letterThatWasCorrect, positionOfLetter) {
+      // Hämtar alla inputfält i "Gissa-ord-rutan"
     var letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input');
-
+      // Tilldelar värdet från knapptryck till rätt ruta i "Gissa-ord-rutan"
     letterBoxes[positionOfLetter].value = letterThatWasCorrect;
 }
 // Mäter tiden
