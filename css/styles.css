@@ -99,7 +99,7 @@ footer {
   display: inline-flex;
   list-style-type: none;
   flex-wrap: wrap;
-  justify-content: space-between;
+/*  justify-content: space-between;*/
   align-items: center;
 }
 
@@ -219,4 +219,8 @@ footer {
     transparent 5px
   );
   border-top: 1px solid #000;
+}
+
+.hidden {
+  display: none;
 }
