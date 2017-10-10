@@ -89,10 +89,13 @@ footer {
 
 #startGameBtn {
   font-size: 1.5em;
+  margin: auto;
 }
 
 #gameBoard {
   padding: 10px 0;
+  max-width: 920px;
+  margin: auto;
 }
 
 #letterButtons {
@@ -129,6 +132,10 @@ footer {
 #message {
   padding-top: 20px;
   font-size: 1.5em;
+}
+
+#hangman {
+  text-align: center;
 }
 
 .btn {
@@ -223,4 +230,63 @@ footer {
 
 .hidden {
   display: none;
+}
+
+
+/******************** ANIMATION **********************/
+main li{
+  opacity: 0;
+  animation-name: bounceIn;
+  animation-duration: 450ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+li{animation-delay: 0.10s;}
+li:nth-child(2){animation-delay: 0.15s;}
+li:nth-child(3){animation-delay: 0.20s;}
+li:nth-child(4){animation-delay: 0.25s;}
+li:nth-child(5){animation-delay: 0.30s;}
+li:nth-child(6){animation-delay: 0.35s;}
+li:nth-child(7){animation-delay: 0.40s;}
+li:nth-child(8){animation-delay: 0.45s;}
+li:nth-child(9){animation-delay: 0.50s;}
+li:nth-child(10){animation-delay: 0.55s;}
+li:nth-child(11){animation-delay: 0.60s;}
+li:nth-child(12){animation-delay: 0.65s;}
+li:nth-child(13){animation-delay: 0.70s;}
+li:nth-child(14){animation-delay: 0.75s;}
+li:nth-child(15){animation-delay: 0.80s;}
+li:nth-child(16){animation-delay: 0.85s;}
+li:nth-child(17){animation-delay: 0.90s;}
+li:nth-child(18){animation-delay: 0.95s;}
+li:nth-child(19){animation-delay: 1.00s;}
+li:nth-child(20){animation-delay: 1.05s;}
+li:nth-child(21){animation-delay: 1.10s;}
+li:nth-child(22){animation-delay: 1.15s;}
+li:nth-child(23){animation-delay: 1.20s;}
+li:nth-child(24){animation-delay: 1.25s;}
+li:nth-child(25){animation-delay: 1.30s;}
+li:nth-child(26){animation-delay: 1.35s;}
+li:nth-child(27){animation-delay: 1.40s;}
+li:nth-child(28){animation-delay: 1.45s;}
+li:nth-child(29){animation-delay: 1.50s;}
+
+@keyframes bounceIn{
+  0%{
+    opacity: 0;
+    transform: scale(0.3) translate3d(0,0,0);
+  }
+  50%{
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+  80%{
+    opacity: 1;
+    transform: scale(0.89);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1) translate3d(0,0,0);
+  }
 }

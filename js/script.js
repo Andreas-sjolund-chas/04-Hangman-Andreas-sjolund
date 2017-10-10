@@ -8,7 +8,7 @@ function init() {
 //////////////////////////////////////////////////////////
   // Lista med spelets alla ord
 //////////////////////////////////////////////////////////
-var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript', 'Husse är sämst'];
+var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript'];
 
 //////////////////////////////////////////////////////////
 // Ett av orden valt av en slumpgenerator
@@ -48,13 +48,17 @@ var letterBoxes = function createLetters() {
 //////////////////////////////////////////////////////////
 //Bild som kommer vid fel svar
 //////////////////////////////////////////////////////////
-var hangmanImg;
+// var hangmanImg = document.querySelector('#hangman');
+// if (currentButtonValue !== selectedWord[j]) {
+//   hangmanImg.setAttribute('src', 'images/h'++'.png');
+// }
 
 //////////////////////////////////////////////////////////
 // Vilken av bilderna som kommer upp beroende på hur många fel du gjort
 //////////////////////////////////////////////////////////
 var hangmanImgNr;
-
+let counter = 0;
+var hangmanImg = document.querySelector('#hangman');
 //////////////////////////////////////////////////////////
 // Ger meddelande när spelet är över
 //////////////////////////////////////////////////////////
@@ -64,11 +68,15 @@ var msgElem;
 // Knappen du startar spelet med
 //////////////////////////////////////////////////////////
 var startGameBtn = document.querySelector('#startGameBtn');
+var info = document.querySelector('#info');
+var infoText = document.querySelector('#infotext');
 var startGame = function() {
-  
+  info.remove(infoText);
+
   console.log('game started');
   letterBoxes();
 } 
+
 startGameBtn.addEventListener('click', startGame);
 
 //////////////////////////////////////////////////////////
@@ -79,32 +87,48 @@ var guessLetterBtns = document.querySelectorAll('#letterButtons > li > button');
   //Loopar igenom alla gissa-knappar
 for (let i = 0; i < guessLetterBtns.length; i++) {
     // Lägger till en lyssnare efter klick på alla gissa-knappar
-  guessLetterBtns[i].addEventListener('click', function() {
-      // Lägger till disabled på knapparna efter klick
-    guessLetterBtns[i].setAttribute('disabled', '');
+  guessLetterBtns[i].addEventListener('click', handleGuess);
+}
 
-    const currentButtonValue = guessLetterBtns[i].value;
-      // Loopar igenom nuvarande ord som man gissar på
-    for (let j = 0; j < selectedWord.length; j++) {
-        // Om knapptryck stämmer med bokstav i ordet anropa "rightGuess" funktionen
-      if (currentButtonValue === selectedWord[j]) {
-          // Skickar vidare bokstav från gissa-knapp (currentButtonValue) och loopen som letar efter positonen för alla bokstäver som är rätt (j)
-        rightGuess(currentButtonValue, j);
-      }
-    }
+function handleGuess(e) {
+  console.log('click triggered');
+  e.target.setAttribute('disabled', ''); // Lägger till disabled på knapparna efter klick
 
-  });
+  const guessedLetter = e.target.value; // Matar in value för vilken knapp man trycker på till "guessedLetter"
+  
+  let guess = selectedWord.split(''); // Delar upp ordet och matar in varje bokstav till en array
+  let letterPosition = guess.indexOf(guessedLetter); // Kollar vilken position bokstaven i ordet har gentemot vilken bokstav man gissar på
+  let positions = []; //Tar emot positioner för varje bokstav i ordet
 
+  // Om bokstaven finns i ordet körs loopen nedan
+  while (letterPosition != -1) {
+    positions.push(letterPosition); // Matar in vilken position bokstav har till en array (positions)
+    letterPosition = guess.indexOf(guessedLetter, letterPosition + 1); // 
+  }
+
+  // Om positions har tilldelats ett värde kör "if"
+  if (positions.length > 0) {
+    rightGuess(guessedLetter, positions);
+  } else if (counter < 6) { // Om "counter" är mindre än 6 kör "else if"
+    console.log('Guess was wrong');
+    counter++; // Lägger till + 1 till "counter"
+    hangmanImg.src = `images/h${counter}.png`;
+  } else {
+    console.log('GAME OVER MAN'); // DU FÖRLORADE
+  }
 }
   // Tar emot 2 argument, bokstaven som var korrekt (letterThatWasCorrect) och vilken position dessa befinner sig på
-function rightGuess(letterThatWasCorrect, positionOfLetter) {
-      // Hämtar alla inputfält i "Gissa-ord-rutan"
-    var letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input');
-      // Tilldelar värdet från knapptryck till rätt ruta i "Gissa-ord-rutan"
-    letterBoxes[positionOfLetter].value = letterThatWasCorrect;
+
+function rightGuess(letterThatWasCorrect, letterPositions) {
+    var letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input'); // Hämtar alla inputfält i "Gissa-ord-rutan"
+    
+    letterPositions.forEach(function(position) {
+      console.log(position);
+      letterBoxes[position].value = letterThatWasCorrect;
+    });
 }
 // Mäter tiden
-var startTime; 
+var startTime;
 
 } // End init
 
