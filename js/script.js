@@ -70,6 +70,7 @@ var msgElem;
 var startGameBtn = document.querySelector('#startGameBtn');
 var info = document.querySelector('#info');
 var infoText = document.querySelector('#infotext');
+
 var startGame = function() {
   info.remove(infoText);
 
