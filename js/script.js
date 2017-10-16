@@ -11,7 +11,7 @@ var youWinMsg = document.querySelector('#youWin');
 //////////////////////////////////////////////////////////
   // Lista med spelets alla ord
 //////////////////////////////////////////////////////////
-var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript'];
+var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript', 'pulp fiction', 'dator', 'programmering', 'frontend', 'backend', 'vroksjab'];
 
 //////////////////////////////////////////////////////////
 // Ett av orden valt av en slumpgenerator
