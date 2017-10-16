@@ -5,6 +5,9 @@
 // Initiering av globala variabler samt koppling av funktioner till knapparna.
 function init() {
 
+var letterButtons = document.querySelectorAll('#letterButtons > li > button');
+var gameOverMsg = document.querySelector('#gameOver');
+var youWinMsg = document.querySelector('#youWin');
 //////////////////////////////////////////////////////////
   // Lista med spelets alla ord
 //////////////////////////////////////////////////////////
@@ -13,7 +16,7 @@ var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript'];
 //////////////////////////////////////////////////////////
 // Ett av orden valt av en slumpgenerator
 //////////////////////////////////////////////////////////
-var selectedWord = generateRandomWord().toUpperCase();
+var selectedWord;
 
 function generateRandomWord() {
   return selectedWord = wordList[Math.floor((Math.random() * wordList.length) + 0)];
@@ -57,7 +60,7 @@ var letterBoxes = function createLetters() {
 // Vilken av bilderna som kommer upp beroende på hur många fel du gjort
 //////////////////////////////////////////////////////////
 var hangmanImgNr;
-let counter = 0;
+let counter;
 var hangmanImg = document.querySelector('#hangman');
 //////////////////////////////////////////////////////////
 // Ger meddelande när spelet är över
@@ -72,10 +75,18 @@ var info = document.querySelector('#info');
 var infoText = document.querySelector('#infotext');
 
 var startGame = function() {
+  selectedWord = generateRandomWord().toUpperCase();
   info.remove(infoText);
-
+  counter = 0;
+  document.querySelector('#hangman').src = 'images/h' + counter + '.png';
   console.log('game started');
   letterBoxes();
+  gameOverMsg.style.display = 'none';
+  youWinMsg.style.display = 'none';
+
+  for(var i = 0; letterButtons.length; i++) {
+    letterButtons[i].removeAttribute('disabled', '');
+  }
 } 
 
 startGameBtn.addEventListener('click', startGame);
@@ -87,8 +98,7 @@ startGameBtn.addEventListener('click', startGame);
 var guessLetterBtns = document.querySelectorAll('#letterButtons > li > button');
   //Loopar igenom alla gissa-knappar
 for (let i = 0; i < guessLetterBtns.length; i++) {
-    // Lägger till en lyssnare efter klick på alla gissa-knappar
-  guessLetterBtns[i].addEventListener('click', handleGuess);
+  guessLetterBtns[i].addEventListener('click', handleGuess); // Lägger till en lyssnare efter klick på alla gissa-knappar
 }
 
 function handleGuess(e) {
@@ -110,16 +120,17 @@ function handleGuess(e) {
   // Om positions har tilldelats ett värde kör "if"
   if (positions.length > 0) {
     rightGuess(guessedLetter, positions);
-  } else if (counter < 6) { // Om "counter" är mindre än 6 kör "else if"
+  } else if (counter < 6) { // Om "counter" är mindre än 6 lägg kör statement
     console.log('Guess was wrong');
     counter++; // Lägger till + 1 till "counter"
     hangmanImg.src = `images/h${counter}.png`;
-  } else {
+  } else if (counter === 6) {
+    gameOver();
     console.log('GAME OVER MAN'); // DU FÖRLORADE
   }
 }
-  // Tar emot 2 argument, bokstaven som var korrekt (letterThatWasCorrect) och vilken position dessa befinner sig på
 
+// Tar emot 2 argument, bokstaven som var korrekt (letterThatWasCorrect) och vilken position dessa befinner sig på
 function rightGuess(letterThatWasCorrect, letterPositions) {
     var letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input'); // Hämtar alla inputfält i "Gissa-ord-rutan"
     
@@ -127,7 +138,40 @@ function rightGuess(letterThatWasCorrect, letterPositions) {
       console.log(position);
       letterBoxes[position].value = letterThatWasCorrect;
     });
+
+    var buildWord = [];
+    for (var i = 0; i < letterBoxes.length; i++) {
+      if (letterBoxes[i].value == '-') {
+        buildWord.push(' ');
+      } else {
+        buildWord.push(letterBoxes[i].value);
+      }
+    }
+
+    buildWord = buildWord.join('');
+
+    if (buildWord === selectedWord) {
+      youWin();
+    }
+    console.log(selectedWord);
+    console.log(buildWord);
 }
+
+
+function gameOver() {
+  gameOverMsg.style.display = 'flex';
+  for(var i = 0; i < letterButtons.length; i++) {
+  letterButtons[i].setAttribute('disabled', 'disabled');
+  }
+};
+
+function youWin() {
+  youWinMsg.style.display = 'flex';
+  for(var i = 0; i < letterButtons.length; i++) {
+  letterButtons[i].setAttribute('disabled', 'disabled');
+  }
+};
+
 // Mäter tiden
 var startTime;
 

@@ -87,9 +87,21 @@ footer {
   text-align: center;
 }
 
+h2 {
+  display: none;
+  justify-content: center;
+  font-size: 6rem;
+}
+
 #startGameBtn {
   font-size: 1.5em;
   margin: auto;
+}
+
+#startGameBtn:hover {
+  background-color: #666;
+  color: #fff;
+  border-color: #000;
 }
 
 #gameBoard {
@@ -158,6 +170,7 @@ footer {
   padding: 16px 36px 22px;
   text-decoration: none;
   text-transform: uppercase;
+  font-weight: 900;
 }
 
 .btn::-moz-focus-inner {
@@ -229,12 +242,15 @@ footer {
   border-top: 1px solid #000;
 }
 
-.hidden {
-  display: none;
+/******************** ANIMATION **********************/
+h2 {
+  opacity: 0;
+  animation-name: bounceIn;
+  animation-duration: 3.00s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
 }
 
-
-/******************** ANIMATION **********************/
 main li{
   opacity: 0;
   animation-name: bounceIn;
@@ -289,5 +305,30 @@ li:nth-child(29){animation-delay: 1.50s;}
   100%{
     opacity: 1;
     transform: scale(1) translate3d(0,0,0);
+  }
+}
+
+/******************** MEDIA QUERY **********************/
+
+@media screen and (max-width: 900px) {
+
+  img {
+    max-width: 150px;
+    height: auto;
+  }
+
+  .btn {
+    transform: scale(0.5);
+  }
+
+  #letterButtons li {
+    max-width: 42px;
+    height: auto;
+    margin-right: 3px;
+  }
+
+  #letterBoxes li {
+    height: 10px;
+    width: 10px;
   }
 }

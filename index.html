@@ -17,8 +17,21 @@
             <h2 id="infotext">Andreas hangman game.</h2>
             <p id="infotext">Tryck på knappen nedan för att starta spelet.</p>
         </article>
-        <button class="btn btn--stripe" type="button" id="startGameBtn">Starta spelet</button>
+        <button class="btn" type="button" id="startGameBtn">Starta spelet</button>
         <section id="gameBoard">
+            
+            <h2 id="gameOver">GAME OVER!</h2>
+
+            <h2 id="youWin">YOU WIN!</h2>
+
+            <img id="hangman" src="images/h0.png" alt="hangman">
+
+             <section id="letterBoxes">
+                <ul>
+
+                </ul>
+            </section>
+
             <ul id="letterButtons">
                 <li><button class="btn btn--stripe" type="button" value="A">A</button></li>
                 <li><button class="btn btn--stripe" type="button" value="B">B</button></li>
@@ -50,19 +63,7 @@
                 <li><button class="btn btn--stripe" type="button" value="Ä">Ä</button></li>
                 <li><button class="btn btn--stripe" type="button" value="Ö">Ö</button></li>
             </ul>
-            <section id="letterBoxes">
-                <!-- This is where the matched letters should appear, these should match the number of -->
-                <ul>
-<!--                     <li><input type="text" disabled value="C" /></li>
-                    <li><input type="text" disabled value="&nbsp;"  /></li> -->
-
-                </ul>
-            </section>
-            <img id="hangman" src="images/h0.png" alt="hangman">
-        </section>
-        <section id="message">
-            <!-- This is where messages should appear -->
-        </section>
+       </section>
     </main>
     <footer>
         Chas Academy - Hangman
