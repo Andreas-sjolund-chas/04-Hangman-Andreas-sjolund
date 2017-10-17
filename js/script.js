@@ -8,15 +8,58 @@ function init() {
 var letterButtons = document.querySelectorAll('#letterButtons > li > button');
 var gameOverMsg = document.querySelector('#gameOver');
 var youWinMsg = document.querySelector('#youWin');
+
+
+/************** TIME *************/
+var timeBox = document.getElementsByTagName('h3')[0];
+var miliseconds;
+var seconds;
+var minutes;
+var time;
+
+function addTime() {
+  miliseconds++;
+    if (miliseconds >= 100) {
+      miliseconds = 0;
+      seconds++;
+    
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+    }
+  }
+
+  timeBox.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") 
+                        + ":" + 
+                        (seconds ? (seconds > 9 ? seconds : "0" + seconds) : "00") 
+                        + ":" + 
+                        (miliseconds > 9 ? miliseconds : "0" + miliseconds);
+
+  timer();
+}
+
+function timer() {
+  time = setTimeout(addTime, 10);
+}
+
+function clearTime() {
+  clearTimeout(time);
+  miliseconds = 0;
+  seconds = 0;
+  minutes = 0;
+}
+
 //////////////////////////////////////////////////////////
   // Lista med spelets alla ord
 //////////////////////////////////////////////////////////
-var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript', 'pulp fiction', 'dator', 'programmering', 'frontend', 'backend', 'vroksjab'];
+
+var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript', 'pulp fiction', 'dator', 'programmering', 'frontend', 'backend'];
 
 //////////////////////////////////////////////////////////
 // Ett av orden valt av en slumpgenerator
 //////////////////////////////////////////////////////////
 var selectedWord;
+var letterBoxes;
 
 function generateRandomWord() {
   return selectedWord = wordList[Math.floor((Math.random() * wordList.length) + 0)];
@@ -25,7 +68,7 @@ function generateRandomWord() {
 //////////////////////////////////////////////////////////
 //Rutorna där bokstäverna ska stå
 //////////////////////////////////////////////////////////
-var letterBoxes = function createLetters() {
+function createLetters() {
 
   var letterBox = document.querySelector('#letterBoxes > ul');
 
@@ -41,12 +84,15 @@ var letterBoxes = function createLetters() {
             // Om ordet innehåller mellanslag lägg till "-" annars lämna value blank
           if (selectedWord[i] == ' ') {
             letterInput.setAttribute('value', '-');
+            createLetterBox.classList.add('hidden');
           } else {
             letterInput.setAttribute('value', ' ');
           }
     
     createLetterBox.appendChild(letterInput);
     }
+
+  letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input'); // Hämtar alla inputfält i "Gissa-ord-rutan"
 }
 //////////////////////////////////////////////////////////
 //Bild som kommer vid fel svar
@@ -75,18 +121,29 @@ var info = document.querySelector('#info');
 var infoText = document.querySelector('#infotext');
 
 var startGame = function() {
-  selectedWord = generateRandomWord().toUpperCase();
-  info.remove(infoText);
   counter = 0;
+  clearTime();
+  timer();
   document.querySelector('#hangman').src = 'images/h' + counter + '.png';
-  console.log('game started');
-  letterBoxes();
   gameOverMsg.style.display = 'none';
   youWinMsg.style.display = 'none';
-
-  for(var i = 0; letterButtons.length; i++) {
+  
+  info.remove(infoText);
+  selectedWord = generateRandomWord().toUpperCase();
+  createLetters();
+  
+  
+  for(var i = 0; i < letterButtons.length; i++) {
     letterButtons[i].removeAttribute('disabled', '');
   }
+
+  if (letterBoxes) {
+    letterBoxes.forEach(function(letterBox) {
+      letterBox.value = '';
+    });
+  }
+
+  console.log('game started');
 } 
 
 startGameBtn.addEventListener('click', startGame);
@@ -131,17 +188,14 @@ function handleGuess(e) {
 }
 
 // Tar emot 2 argument, bokstaven som var korrekt (letterThatWasCorrect) och vilken position dessa befinner sig på
-function rightGuess(letterThatWasCorrect, letterPositions) {
-    var letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input'); // Hämtar alla inputfält i "Gissa-ord-rutan"
-    
+function rightGuess(letterThatWasCorrect, letterPositions) {  
     letterPositions.forEach(function(position) {
-      console.log(position);
       letterBoxes[position].value = letterThatWasCorrect;
     });
 
     var buildWord = [];
-    for (var i = 0; i < letterBoxes.length; i++) {
-      if (letterBoxes[i].value == '-') {
+    for (var i = 0; i < selectedWord.length; i++) {
+      if (selectedWord[i] == ' ') {
         buildWord.push(' ');
       } else {
         buildWord.push(letterBoxes[i].value);
@@ -155,14 +209,18 @@ function rightGuess(letterThatWasCorrect, letterPositions) {
     }
     console.log(selectedWord);
     console.log(buildWord);
-}
-
+};
 
 function gameOver() {
   gameOverMsg.style.display = 'flex';
   for(var i = 0; i < letterButtons.length; i++) {
-  letterButtons[i].setAttribute('disabled', 'disabled');
+    letterButtons[i].setAttribute('disabled', 'disabled');
   }
+
+  for(var i = 0; i < letterBoxes.length; i++) {
+    letterBoxes[i].value = selectedWord[i];
+  }
+  clearTime();
 };
 
 function youWin() {
@@ -170,10 +228,9 @@ function youWin() {
   for(var i = 0; i < letterButtons.length; i++) {
   letterButtons[i].setAttribute('disabled', 'disabled');
   }
+  clearTime();
 };
 
-// Mäter tiden
-var startTime;
 
 } // End init
 

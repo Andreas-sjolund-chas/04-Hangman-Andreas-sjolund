@@ -108,7 +108,7 @@ h2 {
   padding: 10px 0;
   max-width: 920px;
   margin: auto;
-  text-align: center;
+  /*text-align: center;*/
 }
 
 #letterButtons {
@@ -149,6 +149,15 @@ h2 {
 
 #hangman {
   text-align: center;
+  z-index: 999;
+}
+
+.centered {
+  text-align: center;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .btn {
@@ -309,7 +318,7 @@ li:nth-child(29){animation-delay: 1.50s;}
 }
 
 /******************** MEDIA QUERY **********************/
-
+/*
 @media screen and (max-width: 900px) {
 
   img {
@@ -332,3 +341,4 @@ li:nth-child(29){animation-delay: 1.50s;}
     width: 10px;
   }
 }
+*/
