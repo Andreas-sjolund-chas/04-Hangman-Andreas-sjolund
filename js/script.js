@@ -134,7 +134,6 @@ var startGame = function() {
   }
 
   startGameBtn.innerHTML = 'starta om spelet';
-  console.log('game started');
 } 
 
 startGameBtn.addEventListener('click', startGame);  // Lyssnar efter klick på starta spel-knappen och kör då startGame
@@ -150,7 +149,6 @@ for (let i = 0; i < guessLetterBtns.length; i++) {
 }
 
 function handleGuess(e) {
-  console.log('click triggered');
   e.target.setAttribute('disabled', ''); // Lägger till disabled på knapparna efter klick
 
   const guessedLetter = e.target.value; // Matar in value för vilken knapp man trycker på till "guessedLetter"
@@ -169,12 +167,10 @@ function handleGuess(e) {
   if (positions.length > 0) {
     rightGuess(guessedLetter, positions);
   } else if (counter < 6) { // Om "counter" är mindre än 6 lägg kör statement
-    console.log('Guess was wrong');
     counter++; // Lägger till + 1 till "counter"
     hangmanImg.src = `images/h${counter}.png`;
   } else if (counter === 6) {
     gameOver();
-    console.log('GAME OVER MAN'); // DU FÖRLORADE
   }
 }
 
@@ -202,8 +198,6 @@ function rightGuess(letterThatWasCorrect, letterPositions) {
     if (buildWord === selectedWord) {
       youWin();
     }
-    console.log(selectedWord);
-    console.log(buildWord);
 };
 
 //////////////////////////////////////////////////////////
