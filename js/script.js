@@ -1,21 +1,38 @@
-// Globala variabler
-
-
 // Funktion som körs då hela webbsidan är inladdad, dvs då all HTML-kod är utförd
 // Initiering av globala variabler samt koppling av funktioner till knapparna.
 function init() {
 
-var letterButtons = document.querySelectorAll('#letterButtons > li > button');
-var gameOverMsg = document.querySelector('#gameOver');
-var youWinMsg = document.querySelector('#youWin');
+//////////////////////////////////////////////////////////
+  // GLOBALA VARIABLER
+//////////////////////////////////////////////////////////
+
+/************** ORDLISTA *************/
+var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript', 'pulp fiction', 'dator', 'programmering', 'frontend', 'backend'];
+
+var letterButtons = document.querySelectorAll('#letterButtons > li > button');  // Gissa-knappar
+var gameOverMsg = document.querySelector('#gameOver');  // Förlust meddelande
+var youWinMsg = document.querySelector('#youWin');  // Vinst meddelande
+var hangmanImg = document.querySelector('#hangman'); // Hänga-gubbe-bilden
+var startGameBtn = document.querySelector('#startGameBtn'); // Starta/Börja om -knapp
+var info = document.querySelector('#info'); // Infocontainer
+var infoText = document.querySelector('#infotext'); // Infotext
+
+var selectedWord; // Det slumpade ordet
+var letterBoxes;  // Område för ordet som spelas (här hamnar de rätta bokstäverna när man gissat rätt)
+let counter; // Räknar uppåt varje gång man gissar fel
 
 
-/************** TIME *************/
+
+/************** TIMER VARIABLER *************/
 var timeBox = document.getElementsByTagName('h3')[0];
 var miliseconds;
 var seconds;
 var minutes;
 var time;
+
+//////////////////////////////////////////////////////////
+  // TIMER
+//////////////////////////////////////////////////////////
 
 function addTime() {
   miliseconds++;
@@ -50,24 +67,17 @@ function clearTime() {
 }
 
 //////////////////////////////////////////////////////////
-  // Lista med spelets alla ord
+// Generator som går igenom worlist och väljer ut ett slumpat ord
 //////////////////////////////////////////////////////////
-
-var wordList = ['Chas Academy', 'Hänga Gubbe', 'Javascript', 'pulp fiction', 'dator', 'programmering', 'frontend', 'backend'];
-
-//////////////////////////////////////////////////////////
-// Ett av orden valt av en slumpgenerator
-//////////////////////////////////////////////////////////
-var selectedWord;
-var letterBoxes;
 
 function generateRandomWord() {
   return selectedWord = wordList[Math.floor((Math.random() * wordList.length) + 0)];
 }
 
 //////////////////////////////////////////////////////////
-//Rutorna där bokstäverna ska stå
+// Skapar rutorna där bokstäverna ska fyllas i som är rätt
 //////////////////////////////////////////////////////////
+
 function createLetters() {
 
   var letterBox = document.querySelector('#letterBoxes > ul');
@@ -94,31 +104,11 @@ function createLetters() {
 
   letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input'); // Hämtar alla inputfält i "Gissa-ord-rutan"
 }
-//////////////////////////////////////////////////////////
-//Bild som kommer vid fel svar
-//////////////////////////////////////////////////////////
-// var hangmanImg = document.querySelector('#hangman');
-// if (currentButtonValue !== selectedWord[j]) {
-//   hangmanImg.setAttribute('src', 'images/h'++'.png');
-// }
-
-//////////////////////////////////////////////////////////
-// Vilken av bilderna som kommer upp beroende på hur många fel du gjort
-//////////////////////////////////////////////////////////
-var hangmanImgNr;
-let counter;
-var hangmanImg = document.querySelector('#hangman');
-//////////////////////////////////////////////////////////
-// Ger meddelande när spelet är över
-//////////////////////////////////////////////////////////
-var msgElem;
 
 //////////////////////////////////////////////////////////
 // Knappen du startar spelet med
 //////////////////////////////////////////////////////////
-var startGameBtn = document.querySelector('#startGameBtn');
-var info = document.querySelector('#info');
-var infoText = document.querySelector('#infotext');
+
 
 var startGame = function() {
   counter = 0;
@@ -147,13 +137,13 @@ var startGame = function() {
   console.log('game started');
 } 
 
-startGameBtn.addEventListener('click', startGame);
+startGameBtn.addEventListener('click', startGame);  // Lyssnar efter klick på starta spel-knappen och kör då startGame
 
 //////////////////////////////////////////////////////////
 // Knapparna för bokstäverna
 //////////////////////////////////////////////////////////
-  // Hämtar alla gissa-knappar
-var guessLetterBtns = document.querySelectorAll('#letterButtons > li > button');
+
+var guessLetterBtns = document.querySelectorAll('#letterButtons > li > button');  // Gissa-knappar
   //Loopar igenom alla gissa-knappar
 for (let i = 0; i < guessLetterBtns.length; i++) {
   guessLetterBtns[i].addEventListener('click', handleGuess); // Lägger till en lyssnare efter klick på alla gissa-knappar
@@ -188,6 +178,10 @@ function handleGuess(e) {
   }
 }
 
+//////////////////////////////////////////////////////////
+// KÖRS OM MAN GISSAR PÅ RÄTT BOKSTAV
+//////////////////////////////////////////////////////////
+
 // Tar emot 2 argument, bokstaven som var korrekt (letterThatWasCorrect) och vilken position dessa befinner sig på
 function rightGuess(letterThatWasCorrect, letterPositions) {  
     letterPositions.forEach(function(position) {
@@ -212,6 +206,10 @@ function rightGuess(letterThatWasCorrect, letterPositions) {
     console.log(buildWord);
 };
 
+//////////////////////////////////////////////////////////
+// KÖRS NÄR MAN FÖRLORAR
+//////////////////////////////////////////////////////////
+
 function gameOver() {
   gameOverMsg.style.display = 'flex';
   for(var i = 0; i < letterButtons.length; i++) {
@@ -224,6 +222,10 @@ function gameOver() {
   clearTime();
 };
 
+//////////////////////////////////////////////////////////
+// KÖRS NÄR MAN VINNER
+//////////////////////////////////////////////////////////
+
 function youWin() {
   youWinMsg.style.display = 'flex';
   for(var i = 0; i < letterButtons.length; i++) {
@@ -235,18 +237,4 @@ function youWin() {
 
 } // End init
 
-window.onload = init; // Se till att init aktiveras då sidan är inladdad
-
-// Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
-
-// Funktion som slumpar fram ett ord
- 
-// Funktionen som tar fram bokstävernas rutor, antal beror på vilket ord
-
-// Funktion som körs när du trycker på bokstäverna och gissar bokstav
-
-// Funktionen ropas vid vinst eller förlust, gör olika saker beroende av det
-
-// Funktion som inaktiverar/aktiverar bokstavsknapparna beroende på vilken del av spelet du är på
-
-
+window.onload = init; // Ser till att init aktiveras då sidan är inladdad
