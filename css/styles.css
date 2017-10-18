@@ -76,12 +76,11 @@ ul {
 }
 
 footer {
-  background-color: silver;
-  border-top: 1px solid #666;
-  margin-top: 20px;
-  padding-top: 30px;
-  color: #fff;
-  font-size: 1.25em;
+  background-color: transparent;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  color: #666;
+  font-size: 2em;
   width: 100%;
   flex: none;
   text-align: center;
@@ -91,6 +90,27 @@ h2 {
   display: none;
   justify-content: center;
   font-size: 6rem;
+}
+
+#bkg {
+  background-image: url(../images/background.png);
+  background-size: cover;
+  width: 100%;
+  height: 130%;
+  z-index: -1;
+}
+
+#info {
+  padding-top: 0;
+  font-size: 2em;
+}
+
+#gameOver {
+  color: red;
+}
+
+#youWin {
+  color: green;
 }
 
 #startGameBtn {
@@ -117,6 +137,7 @@ h2 {
   flex-wrap: wrap;
 /*  justify-content: space-between;*/
   align-items: center;
+  margin: 5px 0;
 }
 
 #letterButtons button:not(last-child) {
@@ -127,10 +148,12 @@ h2 {
 }
 
 #letterBoxes li {
-  display: inline-flex;
+  display: inline-block;
+  margin-right: 2px;
 }
 
 #letterBoxes input {
+  background-color: transparent;
   border: 1px solid #666;
   color: #666;
   font-size: 1.5em;
@@ -166,7 +189,7 @@ h2 {
   background: transparent;
   border-radius: 6px;
   border: 0;
-  border: 2px solid #666;
+  border: 3px solid #666;
   color: #666;
   cursor: pointer;
   display: block;
@@ -254,15 +277,34 @@ h2 {
 /******************** ANIMATION **********************/
 h2 {
   opacity: 0;
-  animation-name: bounceIn;
+  animation-name: MsgbounceIn;
   animation-duration: 3.00s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
 }
 
+@keyframes MsgbounceIn{
+  0%{
+    opacity: 0;
+    transform: scale(0.3) translate3d(0,0,0);
+  }
+  50%{
+    opacity: 0.9;
+    transform: scale(1.5);
+  }
+  80%{
+    opacity: 1;
+    transform: scale(0.89);
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1) translate3d(0,0,0);
+  }
+}
+
 main li{
   opacity: 0;
-  animation-name: bounceIn;
+  animation-name: ListbounceIn;
   animation-duration: 450ms;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
@@ -297,8 +339,9 @@ li:nth-child(26){animation-delay: 1.35s;}
 li:nth-child(27){animation-delay: 1.40s;}
 li:nth-child(28){animation-delay: 1.45s;}
 li:nth-child(29){animation-delay: 1.50s;}
+li:nth-child(30){animation-delay: 1.55s;}
 
-@keyframes bounceIn{
+@keyframes ListbounceIn{
   0%{
     opacity: 0;
     transform: scale(0.3) translate3d(0,0,0);
@@ -318,27 +361,11 @@ li:nth-child(29){animation-delay: 1.50s;}
 }
 
 /******************** MEDIA QUERY **********************/
-/*
+
 @media screen and (max-width: 900px) {
 
-  img {
-    max-width: 150px;
-    height: auto;
-  }
+#letterBoxes input {
 
-  .btn {
-    transform: scale(0.5);
-  }
+  font-size: 2em;
 
-  #letterButtons li {
-    max-width: 42px;
-    height: auto;
-    margin-right: 3px;
-  }
-
-  #letterBoxes li {
-    height: 10px;
-    width: 10px;
-  }
 }
-*/

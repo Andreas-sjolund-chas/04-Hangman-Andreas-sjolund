@@ -143,6 +143,7 @@ var startGame = function() {
     });
   }
 
+  startGameBtn.innerHTML = 'starta om spelet';
   console.log('game started');
 } 
 
