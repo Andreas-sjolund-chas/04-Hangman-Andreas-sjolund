@@ -129,14 +129,12 @@ h2 {
   padding: 10px 0;
   max-width: 920px;
   margin: auto;
-  /*text-align: center;*/
 }
 
 #letterButtons {
   display: inline-flex;
   list-style-type: none;
   flex-wrap: wrap;
-/*  justify-content: space-between;*/
   align-items: center;
   margin: 5px 0;
 }
@@ -216,34 +214,6 @@ h2 {
   position: relative;
 }
 
-/*.btn--stripe:after {
-  content: "";
-  display: block;
-  height: 7px;
-  width: 100%;
-  background-image: -webkit-repeating-linear-gradient(
-    45deg,
-    #666,
-    #666 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  background-image: repeating-linear-gradient(
-    45deg,
-    #666,
-    #666 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border-top: 1px solid #666;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background-size: 7px 7px;
-}*/
-
 .btn--stripe:disabled {
   background-color: #999;
   color: #fff;
@@ -276,10 +246,39 @@ h2 {
 }
 
 /******************** ANIMATION **********************/
+
+main {
+  opacity: 0;
+  animation-name: FadeIn;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes FadeIn{
+  0%{
+    opacity: 0;
+    transform: scale(1) translate3d(0,0,0);
+  }
+  25%{
+    opacity: 0.25;
+  }
+  50%{
+    opacity: 0.50;
+  }
+  75%{
+    opacity: 0.75;
+  }
+  100%{
+    opacity: 1;
+    transform: scale(1) translate3d(0,0,0);
+  }
+}
+
 h2 {
   opacity: 0;
   animation-name: MsgbounceIn;
-  animation-duration: 3.00s;
+  animation-duration: 3s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
 }
