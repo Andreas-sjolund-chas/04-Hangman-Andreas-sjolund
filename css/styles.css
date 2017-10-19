@@ -119,9 +119,10 @@ h2 {
 }
 
 #startGameBtn:hover {
-  background-color: #666;
+  background-color: #88909b;
   color: #fff;
   border-color: #000;
+  opacity: 0.8;
 }
 
 #gameBoard {
@@ -215,7 +216,7 @@ h2 {
   position: relative;
 }
 
-.btn--stripe:after {
+/*.btn--stripe:after {
   content: "";
   display: block;
   height: 7px;
@@ -241,7 +242,7 @@ h2 {
   left: 0;
   bottom: 0;
   background-size: 7px 7px;
-}
+}*/
 
 .btn--stripe:disabled {
   background-color: #999;
@@ -250,7 +251,7 @@ h2 {
 }
 
 .btn--stripe:hover {
-  background-color: #666;
+  background-color: #88909b;
   color: #fff;
   border-color: #000;
 }
