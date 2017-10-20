@@ -99,7 +99,7 @@ function createLetters() {
     createLetterBox.appendChild(letterInput);
     }
 
-  letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input'); // Hämtar alla inputfält i "Gissa-ord-rutan"
+  letterBoxes = document.querySelectorAll('#letterBoxes > ul > li > input'); // Selects all "inputboxes"
 }
 
 //////////////////////////////////////////////////////////
@@ -133,7 +133,7 @@ var startGame = function() {
   startGameBtn.innerHTML = 'Start over';
 } 
 
-startGameBtn.addEventListener('click', startGame);  // Lyssnar efter klick på starta spel-knappen och kör då startGame
+startGameBtn.addEventListener('click', startGame);  // Listens after click on start game button then runs
 
 //////////////////////////////////////////////////////////
 // Guess letter buttons
