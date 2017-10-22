@@ -19,6 +19,7 @@ var infoText = document.querySelector('#infotext'); // Infotext
 var selectedWord; // Randomized word
 var letterBoxes;  // Area where right guesses prints if your guess is right
 let counter; // Counts everytime your guess is wrong
+var gameIsRunning = false;
 
 /************** TIMER VARIABLES *************/
 var timeBox = document.getElementsByTagName('h3')[0];
@@ -108,6 +109,7 @@ function createLetters() {
 
 
 var startGame = function() {
+  gameIsRunning = true;
   counter = 0;
   clearTime();
   timer();
@@ -145,11 +147,14 @@ for (let i = 0; i < guessLetterBtns.length; i++) {
   guessLetterBtns[i].addEventListener('click', handleGuess); // Adds listener to all guess letter buttons
 }
 
-function handleGuess(e) {
-  e.target.setAttribute('disabled', ''); // Adds disabled to buttons on click
+function handleGuess(e, key) {
 
-  const guessedLetter = e.target.value; // Gets letter value of which button you click
-  
+  if(e){
+   e.target.setAttribute('disabled', ''); // Adds disabled to buttons on click  
+  }
+
+  const guessedLetter = key === undefined ? e.target.value : key.toUpperCase(); // Gets letter value of which button you click
+
   let guess = selectedWord.split(''); // Divides the word into array
   let letterPosition = guess.indexOf(guessedLetter); // Checks the position of the letter in the word compared to guessed letter
   let positions = []; // Array of letter positions
@@ -169,7 +174,25 @@ function handleGuess(e) {
   } else if (counter === 6) {
     gameOver();
   }
+
 }
+
+//////////////////////////////////////////////////////////
+// Guess letter with keypress
+//////////////////////////////////////////////////////////
+
+window.addEventListener('keypress', function(e) {
+  if(gameIsRunning) {
+    for(i = 0; i < letterButtons.length; i++) {
+      if(letterButtons[i].value === e.key.toUpperCase()) {
+        letterButtons[i].setAttribute('disabled', '');
+      }
+    }
+
+  handleGuess(null, e.key);
+
+  }
+});
 
 //////////////////////////////////////////////////////////
 // RUNS ON RIGHT GUESS
@@ -202,6 +225,7 @@ function rightGuess(letterThatWasCorrect, letterPositions) {
 //////////////////////////////////////////////////////////
 
 function gameOver() {
+  gameIsRunning = false;
   gameOverMsg.style.display = 'flex';
   for(var i = 0; i < letterButtons.length; i++) {
     letterButtons[i].setAttribute('disabled', 'disabled');
@@ -218,6 +242,7 @@ function gameOver() {
 //////////////////////////////////////////////////////////
 
 function youWin() {
+  gameIsRunning = false;
   youWinMsg.style.display = 'flex';
   for(var i = 0; i < letterButtons.length; i++) {
   letterButtons[i].setAttribute('disabled', 'disabled');
